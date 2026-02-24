@@ -10,11 +10,9 @@ class BaseRobot:
             weight: int,
             coords: list | None = None
     ) -> None:
-        if coords is None:
-            coords = [0, 0]
         self.name = name
         self.weight = weight
-        self.coords = coords
+        self.coords = coords or [0, 0]
 
     def go_forward(self, step: int = 1) -> None:
         if len(self.coords) < 2:
@@ -47,18 +45,17 @@ class FlyingRobot(BaseRobot):
             weight: int,
             coords: list | None = None
     ) -> None:
-        if coords is None:
-            coords = [0, 0, 0]
+        coords = coords or [0, 0, 0]
         super().__init__(name, weight, coords)
 
     def go_up(self, step: int = 1) -> None:
         if len(self.coords) < 3:
-            raise ValueError("coords must contain z")
+            raise ValueError("coords must contain at least x, y and z")
         self.coords[2] += step
 
     def go_down(self, step: int = 1) -> None:
         if len(self.coords) < 3:
-            raise ValueError("coords must contain z")
+            raise ValueError("coords must contain at least x, y and z")
         self.coords[2] -= step
 
 
